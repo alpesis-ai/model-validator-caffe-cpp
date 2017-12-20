@@ -1,0 +1,11 @@
+# build
+_build
+
+# editor
+*.swo
+*.swm
+*.swn
+*.swp
+
+# makefile
+validator/Makefile

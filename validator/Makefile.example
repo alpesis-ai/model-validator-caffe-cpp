@@ -1,0 +1,21 @@
+BUILD_DIR = _build
+
+CUDA_INCLUDE_DIR = /path/to/cuda/include/
+CUDA_LIB_DIR = /path/to/cuda/lib64/ 
+CAFFE_INCLUDE_DIR = /path/to/caffe/include/
+CAFFE_LIB_DIR = /path/to/caffe/build/lib 
+
+CFLAGS = -I./ -I$(CUDA_INCLUDE_DIR) -I$(CAFFE_INCLUDE_DIR)
+LDFLAGS = -lglog -lboost_system -L$(CUDA_LIB_DIR) -lcudart -lcurand -lcublas -L$(CAFFE_LIB_DIR) -lcaffe 
+
+
+all: clean build
+	# ensure to export the ld_library_path on the terminal before running
+	# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$(CAFFE_LIB_DIR):$(CUDA_LIB_DIR)
+	g++ extractor.cpp -o $(BUILD_DIR)/extractor $(CFLAGS) $(LDFLAGS)
+
+build:
+	mkdir $(BUILD_DIR)
+
+clean:
+	rm -rf $(BUILD_DIR)
