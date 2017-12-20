@@ -106,8 +106,8 @@ void weights_extractor (Net<Dtype>* net, string outpath, string weightnames[])
   {
     string paramsName = net->param_display_names()[i];
     map<string, int> paramsNameIndex = net->param_names_index();
-    const boost::shared_ptr<Blob<float> > thisParams = net->params()[i];
-    const float * paramsOut = thisParams->cpu_data();
+    const boost::shared_ptr<Blob<Dtype> > thisParams = net->params()[i];
+    const Dtype * paramsOut = thisParams->cpu_data();
     LOG(INFO) << i << " (n, c, h, w) " << paramsName << ", "
                                        << thisParams->num() << " " 
                                        << thisParams->channels() << " "
@@ -151,8 +151,8 @@ void outs_extractor (Net<Dtype>* net, string outpath)
   for (int i = 0; i < net->blobs().size(); ++i)
   {
     string layerName = net->blob_names()[i];
-    const boost::shared_ptr<Blob<float> > thisLayer = net->blobs()[i];
-    const float * layerOut = thisLayer->cpu_data();
+    const boost::shared_ptr<Blob<Dtype> > thisLayer = net->blobs()[i];
+    const Dtype * layerOut = thisLayer->cpu_data();
     LOG(INFO) << i << " (n, c, h, w) " << layerName << ": " 
                                        << thisLayer->num() << " "
                                        << thisLayer->channels() << " " 

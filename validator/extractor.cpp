@@ -6,15 +6,16 @@ string WEIGHT_NAMES[8] = {"conv1", "conv1",
                           "ip1", "ip1",
                           "ip2", "ip2"};
 
-void lenet_extractor (char * pt, char * model, char * outpath)
+template <typename Dtype>
+void net_extractor (char * pt, char * model, char * outpath)
 {
   Caffe::set_mode (Caffe::CPU);
-  Net<float> net (pt,caffe::TEST);
+  Net<Dtype> net (pt,caffe::TEST);
   net.CopyTrainedLayersFrom(model);
 
 
-  float loss = 0.0;
-  vector<Blob<float>*> results = net.ForwardPrefilled(&loss);
+  Dtype loss = 0.0;
+  vector<Blob<Dtype>*> results = net.ForwardPrefilled(&loss);
 
   // net
   string name = net.name();
@@ -33,7 +34,7 @@ void lenet_extractor (char * pt, char * model, char * outpath)
 int main(int argc, char ** argv)
 {
   cout << "num of args: " << argc << endl;
-  lenet_extractor((char*)argv[1], (char*)argv[2], (char*)argv[3]);
+  net_extractor<float>((char*)argv[1], (char*)argv[2], (char*)argv[3]);
 
   return 0;
 }
